@@ -1,6 +1,6 @@
-# Contributing to Laravel Flutter Generator
+# Contributing to Laravel Flutter Bridge
 
-Thank you for considering contributing to the Laravel Flutter Generator package!
+Thank you for considering contributing to the Laravel Flutter Bridge package!
 
 ## Author
 

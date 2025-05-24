@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Model Analyzer for Laravel Flutter Generator
+ * Model Analyzer for Laravel Flutter Bridge
  *
  * @author BasharShaeb
  * @package LaravelFlutter\Generator\Analyzers

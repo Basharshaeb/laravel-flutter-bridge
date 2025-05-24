@@ -1,6 +1,6 @@
-# Testing Guide for Laravel Flutter Generator
+# Testing Guide for Laravel Flutter Bridge
 
-This guide explains how to test the Laravel Flutter Generator package thoroughly.
+This guide explains how to test the Laravel Flutter Bridge package thoroughly.
 
 ## 🧪 Testing Overview
 
@@ -52,8 +52,8 @@ composer create-project laravel/laravel test-app
 cd test-app
 
 # Add the package locally for testing
-composer config repositories.local path ../laravel-flutter-generator-package
-composer require laravel-flutter/generator @dev
+composer config repositories.local path ../laravel-flutter-bridge
+composer require bashar-shaeb/laravel-flutter-bridge @dev
 ```
 
 ### 2. Create Test Models
@@ -313,7 +313,7 @@ public function test_analyzes_model_attributes_correctly()
 {
     $analyzer = new ModelAnalyzer();
     $result = $analyzer->analyzeModel(TestUser::class);
-    
+
     $this->assertArrayHasKey('attributes', $result);
     $this->assertArrayHasKey('name', $result['attributes']);
     $this->assertEquals('String', $result['attributes']['name']['type']);
@@ -324,7 +324,7 @@ public function test_handles_relationships()
 {
     $analyzer = new ModelAnalyzer();
     $result = $analyzer->analyzeModel(TestUser::class);
-    
+
     $this->assertArrayHasKey('relationships', $result);
     // Add assertions for specific relationships
 }
@@ -345,9 +345,9 @@ public function test_generates_valid_dart_syntax()
         ],
         'relationships' => [],
     ];
-    
+
     $result = $generator->generate($modelData);
-    
+
     $this->assertStringContainsString('class User {', $result);
     $this->assertStringContainsString('final int id;', $result);
     $this->assertStringContainsString('factory User.fromJson', $result);
@@ -458,21 +458,21 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: 8.1
-        
+
     - name: Install dependencies
       run: composer install
-      
+
     - name: Run tests
       run: composer test
-      
+
     - name: Run static analysis
       run: composer analyse
 ```

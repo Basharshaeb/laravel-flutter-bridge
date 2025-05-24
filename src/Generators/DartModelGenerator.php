@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Dart Model Generator for Laravel Flutter Generator
+ * Dart Model Generator for Laravel Flutter Bridge
  *
  * @author BasharShaeb
  * @package LaravelFlutter\Generator\Generators

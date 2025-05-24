@@ -1,0 +1,231 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [8.1, 8.2, 8.3]
+        laravel-version: [10.*, 11.*]
+        exclude:
+          - php-version: 8.1
+            laravel-version: 11.*
+
+    name: PHP ${{ matrix.php-version }} - Laravel ${{ matrix.laravel-version }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+        coverage: xdebug
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-${{ matrix.php-version }}-
+
+    - name: Install dependencies
+      run: |
+        composer require "laravel/framework:${{ matrix.laravel-version }}" --no-interaction --no-update
+        composer install --prefer-dist --no-interaction --no-progress
+
+    - name: Create test output directory
+      run: mkdir -p test_output
+
+    - name: Run quick test script
+      run: php test-script.php
+
+    - name: Run PHPUnit tests
+      run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+
+    - name: Run PHPStan static analysis
+      run: vendor/bin/phpstan analyse --error-format=github
+
+    - name: Upload coverage reports to Codecov
+      if: matrix.php-version == '8.2' && matrix.laravel-version == '10.*'
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+
+  integration-test:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.2
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+
+    - name: Create Laravel test application
+      run: |
+        composer create-project laravel/laravel test-app --prefer-dist --no-interaction
+        cd test-app
+
+        # Add package as local repository
+        composer config repositories.local path ../
+        composer require bashar-shaeb/laravel-flutter-bridge @dev --no-interaction
+
+    - name: Setup test models in Laravel app
+      run: |
+        cd test-app
+
+        # Create test model
+        cat > app/Models/TestUser.php << 'EOF'
+        <?php
+        namespace App\Models;
+        use Illuminate\Database\Eloquent\Model;
+        use Illuminate\Database\Eloquent\SoftDeletes;
+
+        class TestUser extends Model
+        {
+            use SoftDeletes;
+
+            protected $fillable = ['name', 'email', 'age', 'is_active'];
+            protected $hidden = ['password'];
+            protected $casts = [
+                'is_active' => 'boolean',
+                'age' => 'integer',
+            ];
+        }
+        EOF
+
+        # Create migration
+        php artisan make:migration create_test_users_table --create=test_users
+
+        # Update migration
+        cat > database/migrations/*_create_test_users_table.php << 'EOF'
+        <?php
+        use Illuminate\Database\Migrations\Migration;
+        use Illuminate\Database\Schema\Blueprint;
+        use Illuminate\Support\Facades\Schema;
+
+        return new class extends Migration
+        {
+            public function up()
+            {
+                Schema::create('test_users', function (Blueprint $table) {
+                    $table->id();
+                    $table->string('name');
+                    $table->string('email')->unique();
+                    $table->integer('age')->nullable();
+                    $table->boolean('is_active')->default(true);
+                    $table->string('password');
+                    $table->timestamps();
+                    $table->softDeletes();
+                });
+            }
+
+            public function down()
+            {
+                Schema::dropIfExists('test_users');
+            }
+        };
+        EOF
+
+    - name: Run migrations and test commands
+      run: |
+        cd test-app
+
+        # Run migrations
+        php artisan migrate --force
+
+        # Test package commands
+        php artisan flutter:generate-model TestUser --force
+        php artisan flutter:generate-service TestUser --force
+        php artisan flutter:generate-feature TestUser --force
+
+        # Verify generated files exist
+        test -f flutter_output/models/test_user.dart || exit 1
+        test -f flutter_output/services/test_user_service.dart || exit 1
+        test -f flutter_output/services/api_service.dart || exit 1
+        test -f flutter_output/widgets/test_user_form.dart || exit 1
+        test -f flutter_output/screens/test_user_list_screen.dart || exit 1
+
+    - name: Setup Flutter for code validation
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+
+    - name: Create Flutter test project
+      run: |
+        flutter create flutter_test_app
+        cd flutter_test_app
+
+        # Copy generated files
+        cp -r ../test-app/flutter_output/* lib/
+
+        # Update pubspec.yaml with required dependencies
+        cat > pubspec.yaml << 'EOF'
+        name: flutter_test_app
+        description: Test app for generated Flutter code
+        version: 1.0.0+1
+
+        environment:
+          sdk: '>=3.0.0 <4.0.0'
+          flutter: ">=3.0.0"
+
+        dependencies:
+          flutter:
+            sdk: flutter
+          http: ^1.1.0
+          json_annotation: ^4.8.1
+          provider: ^6.1.1
+
+        dev_dependencies:
+          flutter_test:
+            sdk: flutter
+          build_runner: ^2.4.7
+          json_serializable: ^6.7.1
+          flutter_lints: ^3.0.0
+
+        flutter:
+          uses-material-design: true
+        EOF
+
+    - name: Validate generated Flutter code
+      run: |
+        cd flutter_test_app
+
+        # Get dependencies
+        flutter pub get
+
+        # Generate JSON serialization code
+        flutter packages pub run build_runner build --delete-conflicting-outputs
+
+        # Analyze code
+        flutter analyze
+
+        # Try to build (this will catch compilation errors)
+        flutter build apk --debug --target-platform android-arm64
+
+    - name: Upload generated files as artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: generated-flutter-code
+        path: |
+          test-app/flutter_output/
+          flutter_test_app/lib/
+        retention-days: 7

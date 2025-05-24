@@ -1,6 +1,6 @@
-# Laravel Flutter Generator
+# Laravel Flutter Bridge
 
-A comprehensive Laravel package that automatically generates Flutter features (models, services, UI components) based on your existing Laravel Eloquent models and routes.
+A comprehensive Laravel package that bridges your Laravel backend with Flutter frontend by automatically generating complete Flutter features (models, services, UI components) from your existing Laravel Eloquent models and routes.
 
 ## Features
 
@@ -20,7 +20,7 @@ A comprehensive Laravel package that automatically generates Flutter features (m
 Install the package via Composer:
 
 ```bash
-composer require laravel-flutter/generator
+composer require bashar-shaeb/laravel-flutter-bridge
 ```
 
 Publish the configuration file:

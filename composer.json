@@ -1,15 +1,19 @@
 {
-    "name": "laravel-flutter/generator",
-    "description": "A Laravel package that generates Flutter features (models, services, UI components) based on Laravel models and routes",
+    "name": "bashar-shaeb/laravel-flutter-bridge",
+    "description": "A Laravel package that bridges Laravel backend with Flutter frontend by generating complete Flutter features (models, services, UI components) from Laravel models and routes",
     "type": "library",
     "license": "MIT",
     "keywords": [
         "laravel",
         "flutter",
+        "bridge",
         "generator",
         "code-generation",
         "api",
-        "mobile"
+        "mobile",
+        "cross-platform",
+        "dart",
+        "fullstack"
     ],
     "authors": [
         {
@@ -55,7 +59,18 @@
     "prefer-stable": true,
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-        "analyse": "vendor/bin/phpstan analyse"
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage --coverage-clover coverage.xml",
+        "test-unit": "vendor/bin/phpunit tests/Unit",
+        "test-feature": "vendor/bin/phpunit tests/Feature",
+        "analyse": "vendor/bin/phpstan analyse",
+        "quick-test": "php test-script.php",
+        "test-all": [
+            "@quick-test",
+            "@test",
+            "@analyse"
+        ],
+        "post-install-cmd": [
+            "@php -r \"if (!file_exists('test_output')) { mkdir('test_output', 0755, true); }\""
+        ]
     }
 }

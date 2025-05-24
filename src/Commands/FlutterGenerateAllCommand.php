@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Flutter Generate All Command for Laravel Flutter Generator
+ * Flutter Generate All Command for Laravel Flutter Bridge
  *
  * @author BasharShaeb
  * @package LaravelFlutter\Generator\Commands

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Laravel Flutter Generator Package
+ * Laravel Flutter Bridge Package
  *
  * @author BasharShaeb
  * @package LaravelFlutter\Generator
