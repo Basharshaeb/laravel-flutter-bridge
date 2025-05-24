@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelFlutter\Generator\Tests\Unit;
+namespace BasharShaeb\LaravelFlutterGenerator\Tests\Unit;
 
-use LaravelFlutter\Generator\Tests\TestCase;
-use LaravelFlutter\Generator\Generators\DartModelGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Tests\TestCase;
+use BasharShaeb\LaravelFlutterGenerator\Generators\DartModelGenerator;
 
 class DartModelGeneratorTest extends TestCase
 {
@@ -12,7 +12,7 @@ class DartModelGeneratorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->generator = new DartModelGenerator();
     }
 
@@ -66,7 +66,7 @@ class DartModelGeneratorTest extends TestCase
     public function test_get_output_path_returns_correct_path(): void
     {
         $path = $this->generator->getOutputPath('User');
-        
+
         $this->assertStringContainsString('models', $path);
         $this->assertStringContainsString('user.dart', $path);
     }

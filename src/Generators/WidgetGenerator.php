@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelFlutter\Generator\Generators;
+namespace BasharShaeb\LaravelFlutterGenerator\Generators;
 
 use Illuminate\Support\Str;
 
@@ -17,7 +17,7 @@ class WidgetGenerator extends BaseGenerator
     {
         $widgetType = $options['widget_type'] ?? 'form';
         $className = $this->toPascalCase($data['class_name']);
-        
+
         return match ($widgetType) {
             'form' => $this->generateFormWidget($data, $className),
             'list' => $this->generateListWidget($data, $className),
@@ -37,7 +37,7 @@ class WidgetGenerator extends BaseGenerator
         $basePath = $this->getBaseOutputPath();
         $widgetsPath = $this->config['output']['widgets_path'] ?? 'widgets';
         $fileName = $this->toSnakeCase($name) . $this->getFileExtension();
-        
+
         return $basePath . '/' . $widgetsPath . '/' . $fileName;
     }
 
@@ -102,7 +102,7 @@ class WidgetGenerator extends BaseGenerator
     {
         $modelName = $this->toPascalCase($data['class_name']);
         $modelFileName = $this->toSnakeCase($modelName);
-        
+
         return [
             "import 'package:flutter/material.dart';",
             "import '../models/{$modelFileName}.dart';",
@@ -119,7 +119,7 @@ class WidgetGenerator extends BaseGenerator
     {
         $modelName = $this->toPascalCase($data['class_name']);
         $modelFileName = $this->toSnakeCase($modelName);
-        
+
         return [
             "import 'package:flutter/material.dart';",
             "import '../models/{$modelFileName}.dart';",
@@ -137,7 +137,7 @@ class WidgetGenerator extends BaseGenerator
     {
         $modelName = $this->toPascalCase($data['class_name']);
         $modelFileName = $this->toSnakeCase($modelName);
-        
+
         return [
             "import 'package:flutter/material.dart';",
             "import '../models/{$modelFileName}.dart';",
@@ -334,7 +334,7 @@ class WidgetGenerator extends BaseGenerator
         $primaryFieldName = $this->toCamelCase($primaryField['name']);
         $secondaryFieldName = $secondaryField ? $this->toCamelCase($secondaryField['name']) : null;
 
-        $subtitle = $secondaryFieldName ? 
+        $subtitle = $secondaryFieldName ?
             "          subtitle: Text(widget.item.{$secondaryFieldName}?.toString() ?? ''),\n" : '';
 
         return "  @override\n" .
@@ -382,7 +382,7 @@ class WidgetGenerator extends BaseGenerator
     {
         // Look for common primary fields
         $primaryFields = ['name', 'title', 'email', 'username'];
-        
+
         foreach ($primaryFields as $field) {
             foreach ($attributes as $attribute) {
                 if ($attribute['name'] === $field) {
@@ -412,7 +412,7 @@ class WidgetGenerator extends BaseGenerator
     {
         $primary = $this->getPrimaryDisplayField($attributes);
         $secondaryFields = ['description', 'email', 'phone', 'created_at'];
-        
+
         foreach ($secondaryFields as $field) {
             foreach ($attributes as $attribute) {
                 if ($attribute['name'] === $field && $attribute['name'] !== $primary['name']) {
@@ -442,7 +442,7 @@ class WidgetGenerator extends BaseGenerator
         string $submitMethod
     ): string {
         $importsString = implode("\n", $imports);
-        
+
         return "{$importsString}\n\n" .
                "class {$widgetName} extends StatefulWidget {\n" .
                "  final Function(Map<String, dynamic>)? onSubmit;\n" .
@@ -492,7 +492,7 @@ class WidgetGenerator extends BaseGenerator
     ): string {
         $importsString = implode("\n", $imports);
         $modelName = str_replace('List', '', $widgetName);
-        
+
         return "{$importsString}\n\n" .
                "class {$widgetName} extends StatelessWidget {\n" .
                "  final List<{$modelName}> items;\n" .
@@ -527,7 +527,7 @@ class WidgetGenerator extends BaseGenerator
         string $className
     ): string {
         $importsString = implode("\n", $imports);
-        
+
         return "{$importsString}\n\n" .
                "class {$widgetName} extends StatelessWidget {\n" .
                "  final {$className} item;\n" .

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelFlutter\Generator\Tests\Fixtures;
+namespace BasharShaeb\LaravelFlutterGenerator\Tests\Fixtures;
 
 use Illuminate\Database\Eloquent\Model;
 

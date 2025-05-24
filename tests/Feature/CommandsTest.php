@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelFlutter\Generator\Tests\Feature;
+namespace BasharShaeb\LaravelFlutterGenerator\Tests\Feature;
 
-use LaravelFlutter\Generator\Tests\TestCase;
-use LaravelFlutter\Generator\Tests\Fixtures\TestUser;
+use BasharShaeb\LaravelFlutterGenerator\Tests\TestCase;
+use BasharShaeb\LaravelFlutterGenerator\Tests\Fixtures\TestUser;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -71,18 +71,18 @@ class CommandsTest extends TestCase
              ->assertExitCode(0);
 
         $basePath = config('flutter-generator.output.base_path');
-        
+
         // Check model file
         $this->assertTrue(File::exists($basePath . '/models/test_user.dart'));
-        
+
         // Check service file
         $this->assertTrue(File::exists($basePath . '/services/test_user_service.dart'));
-        
+
         // Check widget files
         $this->assertTrue(File::exists($basePath . '/widgets/test_user_form.dart'));
         $this->assertTrue(File::exists($basePath . '/widgets/test_user_list.dart'));
         $this->assertTrue(File::exists($basePath . '/widgets/test_user_card.dart'));
-        
+
         // Check screen files
         $this->assertTrue(File::exists($basePath . '/screens/test_user_list_screen.dart'));
         $this->assertTrue(File::exists($basePath . '/screens/test_user_detail_screen.dart'));
@@ -97,10 +97,10 @@ class CommandsTest extends TestCase
              ->assertExitCode(0);
 
         $basePath = config('flutter-generator.output.base_path');
-        
+
         // Check base API service
         $this->assertTrue(File::exists($basePath . '/services/api_service.dart'));
-        
+
         // Check all TestUser files are generated
         $this->assertTrue(File::exists($basePath . '/models/test_user.dart'));
         $this->assertTrue(File::exists($basePath . '/services/test_user_service.dart'));
@@ -139,18 +139,18 @@ class CommandsTest extends TestCase
     public function test_skip_options_work_in_feature_command(): void
     {
         $this->artisan('flutter:generate-feature', [
-            'model' => 'TestUser', 
+            'model' => 'TestUser',
             '--force' => true,
             '--skip-widgets' => true,
             '--skip-screens' => true
         ])->assertExitCode(0);
 
         $basePath = config('flutter-generator.output.base_path');
-        
+
         // Model and service should exist
         $this->assertTrue(File::exists($basePath . '/models/test_user.dart'));
         $this->assertTrue(File::exists($basePath . '/services/test_user_service.dart'));
-        
+
         // Widgets and screens should not exist
         $this->assertFalse(File::exists($basePath . '/widgets/test_user_form.dart'));
         $this->assertFalse(File::exists($basePath . '/screens/test_user_list_screen.dart'));
@@ -160,7 +160,7 @@ class CommandsTest extends TestCase
     {
         // Change configuration
         config(['flutter-generator.output.models_path' => 'custom_models']);
-        
+
         $this->artisan('flutter:generate-model', ['model' => 'TestUser', '--force' => true])
              ->assertExitCode(0);
 

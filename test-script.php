@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Quick Test Script for Laravel Flutter Bridge
+ * Quick Test Script for Laravel Flutter Generator
  *
  * This script provides a quick way to test the package functionality
  * Run with: php test-script.php
@@ -11,13 +11,13 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use LaravelFlutter\Generator\Analyzers\ModelAnalyzer;
-use LaravelFlutter\Generator\Analyzers\RouteAnalyzer;
-use LaravelFlutter\Generator\Generators\DartModelGenerator;
-use LaravelFlutter\Generator\Generators\ApiServiceGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer;
+use BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer;
+use BasharShaeb\LaravelFlutterGenerator\Generators\DartModelGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\ApiServiceGenerator;
 
-echo "🚀 Laravel Flutter Bridge - Quick Test Script\n";
-echo "==============================================\n\n";
+echo "🚀 Laravel Flutter Generator - Quick Test Script\n";
+echo "================================================\n\n";
 
 // Test 1: Model Analyzer
 echo "1. Testing Model Analyzer...\n";

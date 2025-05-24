@@ -20,19 +20,19 @@ A comprehensive Laravel package that bridges your Laravel backend with Flutter f
 Install the package via Composer:
 
 ```bash
-composer require bashar-shaeb/laravel-flutter-bridge
+composer require bashar-shaeb/laravel-flutter-generator
 ```
 
 Publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="LaravelFlutter\Generator\FlutterGeneratorServiceProvider" --tag="flutter-generator-config"
+php artisan vendor:publish --provider="BasharShaeb\LaravelFlutterGenerator\FlutterGeneratorServiceProvider" --tag="flutter-generator-config"
 ```
 
 Optionally, publish the templates for customization:
 
 ```bash
-php artisan vendor:publish --provider="LaravelFlutter\Generator\FlutterGeneratorServiceProvider" --tag="flutter-generator-templates"
+php artisan vendor:publish --provider="BasharShaeb\LaravelFlutterGenerator\FlutterGeneratorServiceProvider" --tag="flutter-generator-templates"
 ```
 
 ## Quick Start

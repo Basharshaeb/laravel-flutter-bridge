@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelFlutter\Generator\Generators;
+namespace BasharShaeb\LaravelFlutterGenerator\Generators;
 
 use Illuminate\Support\Str;
 
@@ -17,7 +17,7 @@ class ScreenGenerator extends BaseGenerator
     {
         $screenType = $options['screen_type'] ?? 'list';
         $className = $this->toPascalCase($data['class_name']);
-        
+
         return match ($screenType) {
             'list' => $this->generateListScreen($data, $className),
             'detail' => $this->generateDetailScreen($data, $className),
@@ -38,7 +38,7 @@ class ScreenGenerator extends BaseGenerator
         $basePath = $this->getBaseOutputPath();
         $screensPath = $this->config['output']['screens_path'] ?? 'screens';
         $fileName = $this->toSnakeCase($name) . $this->getFileExtension();
-        
+
         return $basePath . '/' . $screensPath . '/' . $fileName;
     }
 
@@ -125,7 +125,7 @@ class ScreenGenerator extends BaseGenerator
         $modelName = $this->toPascalCase($data['class_name']);
         $modelFileName = $this->toSnakeCase($modelName);
         $serviceFileName = $this->toSnakeCase($modelName) . '_service';
-        
+
         return [
             "import 'package:flutter/material.dart';",
             "import '../models/{$modelFileName}.dart';",
@@ -147,7 +147,7 @@ class ScreenGenerator extends BaseGenerator
         $modelName = $this->toPascalCase($data['class_name']);
         $modelFileName = $this->toSnakeCase($modelName);
         $serviceFileName = $this->toSnakeCase($modelName) . '_service';
-        
+
         return [
             "import 'package:flutter/material.dart';",
             "import '../models/{$modelFileName}.dart';",
@@ -167,7 +167,7 @@ class ScreenGenerator extends BaseGenerator
         $modelName = $this->toPascalCase($data['class_name']);
         $modelFileName = $this->toSnakeCase($modelName);
         $serviceFileName = $this->toSnakeCase($modelName) . '_service';
-        
+
         return [
             "import 'package:flutter/material.dart';",
             "import '../models/{$modelFileName}.dart';",
@@ -298,7 +298,7 @@ class ScreenGenerator extends BaseGenerator
     private function generateDetailScreenBuild(string $className, array $data): string
     {
         $fields = $this->generateDetailFields($data['attributes']);
-        
+
         return "  @override\n" .
                "  Widget build(BuildContext context) {\n" .
                "    return Scaffold(\n" .
@@ -635,7 +635,7 @@ class ScreenGenerator extends BaseGenerator
     ): string {
         $importsString = implode("\n", $imports);
         $constructorParams = $this->getConstructorParams($screenName);
-        
+
         return "{$importsString}\n\n" .
                "class {$screenName} extends StatefulWidget {\n" .
                "{$constructorParams}\n\n" .
@@ -661,12 +661,12 @@ class ScreenGenerator extends BaseGenerator
         if (Str::contains($screenName, 'Detail')) {
             return "  final int itemId;";
         }
-        
+
         if (Str::contains($screenName, 'Edit')) {
             $modelName = str_replace(['EditScreen', 'Edit'], '', $screenName);
             return "  final {$modelName} item;";
         }
-        
+
         return "";
     }
 
@@ -681,11 +681,11 @@ class ScreenGenerator extends BaseGenerator
         if (Str::contains($screenName, 'Detail')) {
             return ", required this.itemId";
         }
-        
+
         if (Str::contains($screenName, 'Edit')) {
             return ", required this.item";
         }
-        
+
         return "";
     }
 }

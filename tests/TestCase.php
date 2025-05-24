@@ -1,16 +1,16 @@
 <?php
 
-namespace LaravelFlutter\Generator\Tests;
+namespace BasharShaeb\LaravelFlutterGenerator\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use LaravelFlutter\Generator\FlutterGeneratorServiceProvider;
+use BasharShaeb\LaravelFlutterGenerator\FlutterGeneratorServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Additional setup if needed
     }
 
@@ -84,17 +84,17 @@ abstract class TestCase extends Orchestra
         }
 
         $files = array_diff(scandir($dir), ['.', '..']);
-        
+
         foreach ($files as $file) {
             $path = $dir . DIRECTORY_SEPARATOR . $file;
-            
+
             if (is_dir($path)) {
                 $this->deleteDirectory($path);
             } else {
                 unlink($path);
             }
         }
-        
+
         rmdir($dir);
     }
 }

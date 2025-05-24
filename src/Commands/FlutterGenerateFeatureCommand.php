@@ -1,11 +1,11 @@
 <?php
 
-namespace LaravelFlutter\Generator\Commands;
+namespace BasharShaeb\LaravelFlutterGenerator\Commands;
 
-use LaravelFlutter\Generator\Generators\DartModelGenerator;
-use LaravelFlutter\Generator\Generators\ApiServiceGenerator;
-use LaravelFlutter\Generator\Generators\WidgetGenerator;
-use LaravelFlutter\Generator\Generators\ScreenGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\DartModelGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\ApiServiceGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\WidgetGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\ScreenGenerator;
 
 class FlutterGenerateFeatureCommand extends BaseFlutterCommand
 {
@@ -14,7 +14,7 @@ class FlutterGenerateFeatureCommand extends BaseFlutterCommand
      *
      * @var string
      */
-    protected $signature = 'flutter:generate-feature 
+    protected $signature = 'flutter:generate-feature
                             {model? : The model name to generate feature for}
                             {--all : Generate features for all available models}
                             {--force : Overwrite existing files}
@@ -42,8 +42,8 @@ class FlutterGenerateFeatureCommand extends BaseFlutterCommand
      * Create a new command instance.
      */
     public function __construct(
-        \LaravelFlutter\Generator\Analyzers\ModelAnalyzer $modelAnalyzer,
-        \LaravelFlutter\Generator\Analyzers\RouteAnalyzer $routeAnalyzer,
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer $modelAnalyzer,
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer $routeAnalyzer,
         DartModelGenerator $modelGenerator,
         ApiServiceGenerator $serviceGenerator,
         WidgetGenerator $widgetGenerator,
@@ -73,13 +73,13 @@ class FlutterGenerateFeatureCommand extends BaseFlutterCommand
             }
 
             $modelName = $this->argument('model');
-            
+
             if (!$modelName) {
                 $modelName = $this->askForModel();
             }
 
             return $this->generateSingleFeature($modelName);
-            
+
         } catch (\Exception $e) {
             $this->error('Error: ' . $e->getMessage());
             return self::FAILURE;
@@ -139,7 +139,7 @@ class FlutterGenerateFeatureCommand extends BaseFlutterCommand
     {
         try {
             $modelClass = $this->validateAndGetModelClass($modelName);
-            
+
             if ($this->isModelExcluded($modelClass)) {
                 $this->warn("Model '{$modelName}' is excluded from generation.");
                 return self::SUCCESS;
@@ -152,7 +152,7 @@ class FlutterGenerateFeatureCommand extends BaseFlutterCommand
             $this->displaySummary($results);
 
             $successful = array_filter($results, fn($result) => $result['success']);
-            
+
             if (count($successful) === count($results)) {
                 $this->info("✅ Successfully generated complete feature for {$modelName}");
                 return self::SUCCESS;
@@ -182,7 +182,7 @@ class FlutterGenerateFeatureCommand extends BaseFlutterCommand
         }
 
         $modelNames = array_map('class_basename', $models);
-        
+
         $selectedModel = $this->choice(
             'Which model would you like to generate a complete feature for?',
             $modelNames

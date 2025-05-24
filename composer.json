@@ -1,5 +1,5 @@
 {
-    "name": "bashar-shaeb/laravel-flutter-bridge",
+    "name": "bashar-shaeb/laravel-flutter-generator",
     "description": "A Laravel package that bridges Laravel backend with Flutter frontend by generating complete Flutter features (models, services, UI components) from Laravel models and routes",
     "type": "library",
     "license": "MIT",
@@ -37,18 +37,18 @@
     },
     "autoload": {
         "psr-4": {
-            "LaravelFlutter\\Generator\\": "src/"
+            "BasharShaeb\\LaravelFlutterGenerator\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaravelFlutter\\Generator\\Tests\\": "tests/"
+            "BasharShaeb\\LaravelFlutterGenerator\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "LaravelFlutter\\Generator\\FlutterGeneratorServiceProvider"
+                "BasharShaeb\\LaravelFlutterGenerator\\FlutterGeneratorServiceProvider"
             ]
         }
     },

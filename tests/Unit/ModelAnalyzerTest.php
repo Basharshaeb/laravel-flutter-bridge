@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelFlutter\Generator\Tests\Unit;
+namespace BasharShaeb\LaravelFlutterGenerator\Tests\Unit;
 
-use LaravelFlutter\Generator\Tests\TestCase;
-use LaravelFlutter\Generator\Analyzers\ModelAnalyzer;
-use LaravelFlutter\Generator\Tests\Fixtures\TestUser;
+use BasharShaeb\LaravelFlutterGenerator\Tests\TestCase;
+use BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer;
+use BasharShaeb\LaravelFlutterGenerator\Tests\Fixtures\TestUser;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -15,7 +15,7 @@ class ModelAnalyzerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->analyzer = new ModelAnalyzer();
         $this->createTestTable();
     }

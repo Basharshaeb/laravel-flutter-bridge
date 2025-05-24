@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Model Analyzer for Laravel Flutter Bridge
+ * Model Analyzer for Laravel Flutter Generator
  *
  * @author BasharShaeb
- * @package LaravelFlutter\Generator\Analyzers
+ * @package BasharShaeb\LaravelFlutterGenerator\Analyzers
  */
 
-namespace LaravelFlutter\Generator\Analyzers;
+namespace BasharShaeb\LaravelFlutterGenerator\Analyzers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use LaravelFlutter\Generator\Contracts\ModelAnalyzerInterface;
+use BasharShaeb\LaravelFlutterGenerator\Contracts\ModelAnalyzerInterface;
 use ReflectionClass;
 use ReflectionMethod;
 

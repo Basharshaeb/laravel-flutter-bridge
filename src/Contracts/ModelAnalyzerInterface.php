@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelFlutter\Generator\Contracts;
+namespace BasharShaeb\LaravelFlutterGenerator\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 

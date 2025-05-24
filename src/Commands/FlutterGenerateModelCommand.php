@@ -1,8 +1,8 @@
 <?php
 
-namespace LaravelFlutter\Generator\Commands;
+namespace BasharShaeb\LaravelFlutterGenerator\Commands;
 
-use LaravelFlutter\Generator\Generators\DartModelGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\DartModelGenerator;
 
 class FlutterGenerateModelCommand extends BaseFlutterCommand
 {
@@ -11,7 +11,7 @@ class FlutterGenerateModelCommand extends BaseFlutterCommand
      *
      * @var string
      */
-    protected $signature = 'flutter:generate-model 
+    protected $signature = 'flutter:generate-model
                             {model? : The model name to generate}
                             {--all : Generate models for all available models}
                             {--force : Overwrite existing files}';
@@ -34,8 +34,8 @@ class FlutterGenerateModelCommand extends BaseFlutterCommand
      * Create a new command instance.
      */
     public function __construct(
-        \LaravelFlutter\Generator\Analyzers\ModelAnalyzer $modelAnalyzer,
-        \LaravelFlutter\Generator\Analyzers\RouteAnalyzer $routeAnalyzer,
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer $modelAnalyzer,
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer $routeAnalyzer,
         DartModelGenerator $generator
     ) {
         parent::__construct($modelAnalyzer, $routeAnalyzer);
@@ -56,13 +56,13 @@ class FlutterGenerateModelCommand extends BaseFlutterCommand
             }
 
             $modelName = $this->argument('model');
-            
+
             if (!$modelName) {
                 $modelName = $this->askForModel();
             }
 
             return $this->generateSingleModel($modelName);
-            
+
         } catch (\Exception $e) {
             $this->error('Error: ' . $e->getMessage());
             return self::FAILURE;
@@ -137,7 +137,7 @@ class FlutterGenerateModelCommand extends BaseFlutterCommand
     {
         try {
             $modelClass = $this->validateAndGetModelClass($modelName);
-            
+
             if ($this->isModelExcluded($modelClass)) {
                 $this->warn("Model '{$modelName}' is excluded from generation.");
                 return self::SUCCESS;
@@ -176,7 +176,7 @@ class FlutterGenerateModelCommand extends BaseFlutterCommand
         }
 
         $modelNames = array_map('class_basename', $models);
-        
+
         $selectedModel = $this->choice(
             'Which model would you like to generate?',
             $modelNames
@@ -203,13 +203,13 @@ class FlutterGenerateModelCommand extends BaseFlutterCommand
         try {
             // Analyze the model
             $modelData = $this->modelAnalyzer->analyzeModel($modelClass);
-            
+
             // Generate the Dart code
             $dartCode = $this->generator->generate($modelData);
-            
+
             // Get the output path
             $outputPath = $this->generator->getOutputPath($modelData['class_name']);
-            
+
             // Write the file
             $overwrite = $this->option('force');
             $success = $this->writeFile($outputPath, $dartCode, $overwrite);

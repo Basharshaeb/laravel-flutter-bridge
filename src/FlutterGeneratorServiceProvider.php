@@ -1,28 +1,28 @@
 <?php
 
 /**
- * Laravel Flutter Bridge Package
+ * Laravel Flutter Generator Package
  *
  * @author BasharShaeb
- * @package LaravelFlutter\Generator
+ * @package BasharShaeb\LaravelFlutterGenerator
  * @version 1.0.0
  */
 
-namespace LaravelFlutter\Generator;
+namespace BasharShaeb\LaravelFlutterGenerator;
 
 use Illuminate\Support\ServiceProvider;
-use LaravelFlutter\Generator\Commands\FlutterGenerateAllCommand;
-use LaravelFlutter\Generator\Commands\FlutterGenerateFeatureCommand;
-use LaravelFlutter\Generator\Commands\FlutterGenerateModelCommand;
-use LaravelFlutter\Generator\Commands\FlutterGenerateServiceCommand;
-use LaravelFlutter\Generator\Contracts\AnalyzerInterface;
-use LaravelFlutter\Generator\Contracts\GeneratorInterface;
-use LaravelFlutter\Generator\Analyzers\ModelAnalyzer;
-use LaravelFlutter\Generator\Analyzers\RouteAnalyzer;
-use LaravelFlutter\Generator\Generators\DartModelGenerator;
-use LaravelFlutter\Generator\Generators\ApiServiceGenerator;
-use LaravelFlutter\Generator\Generators\WidgetGenerator;
-use LaravelFlutter\Generator\Generators\ScreenGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Commands\FlutterGenerateAllCommand;
+use BasharShaeb\LaravelFlutterGenerator\Commands\FlutterGenerateFeatureCommand;
+use BasharShaeb\LaravelFlutterGenerator\Commands\FlutterGenerateModelCommand;
+use BasharShaeb\LaravelFlutterGenerator\Commands\FlutterGenerateServiceCommand;
+use BasharShaeb\LaravelFlutterGenerator\Contracts\AnalyzerInterface;
+use BasharShaeb\LaravelFlutterGenerator\Contracts\GeneratorInterface;
+use BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer;
+use BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer;
+use BasharShaeb\LaravelFlutterGenerator\Generators\DartModelGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\ApiServiceGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\WidgetGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\ScreenGenerator;
 
 class FlutterGeneratorServiceProvider extends ServiceProvider
 {

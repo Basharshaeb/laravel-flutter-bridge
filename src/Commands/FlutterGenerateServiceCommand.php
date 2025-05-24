@@ -1,8 +1,8 @@
 <?php
 
-namespace LaravelFlutter\Generator\Commands;
+namespace BasharShaeb\LaravelFlutterGenerator\Commands;
 
-use LaravelFlutter\Generator\Generators\ApiServiceGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\ApiServiceGenerator;
 
 class FlutterGenerateServiceCommand extends BaseFlutterCommand
 {
@@ -11,7 +11,7 @@ class FlutterGenerateServiceCommand extends BaseFlutterCommand
      *
      * @var string
      */
-    protected $signature = 'flutter:generate-service 
+    protected $signature = 'flutter:generate-service
                             {model? : The model name to generate service for}
                             {--all : Generate services for all available models}
                             {--force : Overwrite existing files}
@@ -35,8 +35,8 @@ class FlutterGenerateServiceCommand extends BaseFlutterCommand
      * Create a new command instance.
      */
     public function __construct(
-        \LaravelFlutter\Generator\Analyzers\ModelAnalyzer $modelAnalyzer,
-        \LaravelFlutter\Generator\Analyzers\RouteAnalyzer $routeAnalyzer,
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer $modelAnalyzer,
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer $routeAnalyzer,
         ApiServiceGenerator $generator
     ) {
         parent::__construct($modelAnalyzer, $routeAnalyzer);
@@ -60,13 +60,13 @@ class FlutterGenerateServiceCommand extends BaseFlutterCommand
             }
 
             $modelName = $this->argument('model');
-            
+
             if (!$modelName) {
                 $modelName = $this->askForModel();
             }
 
             return $this->generateSingleService($modelName);
-            
+
         } catch (\Exception $e) {
             $this->error('Error: ' . $e->getMessage());
             return self::FAILURE;
@@ -141,7 +141,7 @@ class FlutterGenerateServiceCommand extends BaseFlutterCommand
     {
         try {
             $modelClass = $this->validateAndGetModelClass($modelName);
-            
+
             if ($this->isModelExcluded($modelClass)) {
                 $this->warn("Model '{$modelName}' is excluded from generation.");
                 return self::SUCCESS;
@@ -180,7 +180,7 @@ class FlutterGenerateServiceCommand extends BaseFlutterCommand
         }
 
         $modelNames = array_map('class_basename', $models);
-        
+
         $selectedModel = $this->choice(
             'Which model would you like to generate a service for?',
             $modelNames
@@ -200,19 +200,19 @@ class FlutterGenerateServiceCommand extends BaseFlutterCommand
         try {
             // Analyze the model
             $modelData = $this->modelAnalyzer->analyzeModel($modelClass);
-            
+
             // Analyze routes if requested
             if ($this->option('with-routes')) {
                 $routeData = $this->analyzeModelRoutes($modelClass);
                 $modelData = array_merge($modelData, $routeData);
             }
-            
+
             // Generate the service code
             $serviceCode = $this->generator->generate($modelData);
-            
+
             // Get the output path
             $outputPath = $this->generator->getOutputPath($modelData['class_name']);
-            
+
             // Write the file
             $overwrite = $this->option('force');
             $success = $this->writeFile($outputPath, $serviceCode, $overwrite);
@@ -242,13 +242,13 @@ class FlutterGenerateServiceCommand extends BaseFlutterCommand
     {
         $modelName = class_basename($modelClass);
         $resourceName = strtolower($modelName);
-        
+
         // Get all API routes
         $routeData = $this->routeAnalyzer->analyzeApiRoutes();
-        
+
         // Filter routes related to this model
         $modelRoutes = [];
-        
+
         if (isset($routeData['grouped_routes'][$resourceName])) {
             $modelRoutes = $routeData['grouped_routes'][$resourceName];
         }

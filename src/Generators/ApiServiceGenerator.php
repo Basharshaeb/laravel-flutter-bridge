@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelFlutter\Generator\Generators;
+namespace BasharShaeb\LaravelFlutterGenerator\Generators;
 
 use Illuminate\Support\Str;
 
@@ -18,7 +18,7 @@ class ApiServiceGenerator extends BaseGenerator
         $className = $this->toPascalCase($data['class_name'] ?? $data['resource_name']) . 'Service';
         $modelName = $this->toPascalCase($data['class_name'] ?? $data['resource_name']);
         $resourceName = $this->toSnakeCase($data['class_name'] ?? $data['resource_name']);
-        
+
         $imports = $this->getImports($data);
         $properties = $this->generateProperties();
         $constructor = $this->generateConstructor($className);
@@ -46,7 +46,7 @@ class ApiServiceGenerator extends BaseGenerator
         $basePath = $this->getBaseOutputPath();
         $servicesPath = $this->config['output']['services_path'] ?? 'services';
         $fileName = $this->toSnakeCase($name) . '_service' . $this->getFileExtension();
-        
+
         return $basePath . '/' . $servicesPath . '/' . $fileName;
     }
 
@@ -60,7 +60,7 @@ class ApiServiceGenerator extends BaseGenerator
     {
         $modelName = $this->toPascalCase($data['class_name'] ?? $data['resource_name']);
         $modelFileName = $this->toSnakeCase($modelName);
-        
+
         return [
             "import 'dart:convert';",
             "import 'package:http/http.dart' as http;",
@@ -257,33 +257,33 @@ class ApiServiceGenerator extends BaseGenerator
         $methodName = $this->toCamelCase($route['action'] ?? $route['endpoint_type']);
         $httpMethod = strtolower($route['http_method']);
         $hasBody = in_array($httpMethod, ['post', 'put', 'patch']);
-        
+
         $parameters = [];
         $pathParams = [];
-        
+
         // Add path parameters
         foreach ($route['parameters'] ?? [] as $param) {
             $paramType = $param['type'] === 'int' ? 'int' : 'String';
             $parameters[] = "{$paramType} {$param['name']}";
             $pathParams[] = $param['name'];
         }
-        
+
         // Add body parameter for methods that support it
         if ($hasBody) {
             $parameters[] = "Map<String, dynamic> data";
         }
-        
+
         $paramString = implode(', ', $parameters);
         $pathString = $route['uri'];
-        
+
         // Replace path parameters
         foreach ($pathParams as $param) {
             $pathString = str_replace("{{$param}}", "\${$param}", $pathString);
         }
-        
+
         $bodyParam = $hasBody ? ', data' : '';
         $returnType = $this->determineReturnType($route, $modelName);
-        
+
         return $this->generateDocComment("Custom method: {$methodName}") .
                "  Future<{$returnType}> {$methodName}({$paramString}) async {\n" .
                "    try {\n" .
@@ -305,15 +305,15 @@ class ApiServiceGenerator extends BaseGenerator
     private function determineReturnType(array $route, string $modelName): string
     {
         $method = strtolower($route['http_method']);
-        
+
         if ($method === 'delete') {
             return 'bool';
         }
-        
+
         if (Str::contains($route['uri'], '{')) {
             return $modelName; // Single item
         }
-        
+
         return "List<{$modelName}>"; // List of items
     }
 
@@ -327,15 +327,15 @@ class ApiServiceGenerator extends BaseGenerator
     private function generateReturnStatement(array $route, string $modelName): string
     {
         $method = strtolower($route['http_method']);
-        
+
         if ($method === 'delete') {
             return 'true';
         }
-        
+
         if (Str::contains($route['uri'], '{')) {
             return "{$modelName}.fromJson(response['data'] ?? response)";
         }
-        
+
         return "(response['data'] ?? response).map((json) => {$modelName}.fromJson(json)).toList()";
     }
 
@@ -357,7 +357,7 @@ class ApiServiceGenerator extends BaseGenerator
         string $methods
     ): string {
         $importsString = implode("\n", $imports);
-        
+
         return "{$importsString}\n\n" .
                $this->generateDocComment("Service class for {$className}") .
                "class {$className} {\n" .

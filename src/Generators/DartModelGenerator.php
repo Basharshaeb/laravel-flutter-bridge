@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Dart Model Generator for Laravel Flutter Bridge
+ * Dart Model Generator for Laravel Flutter Generator
  *
  * @author BasharShaeb
- * @package LaravelFlutter\Generator\Generators
+ * @package BasharShaeb\LaravelFlutterGenerator\Generators
  */
 
-namespace LaravelFlutter\Generator\Generators;
+namespace BasharShaeb\LaravelFlutterGenerator\Generators;
 
 use Illuminate\Support\Str;
 

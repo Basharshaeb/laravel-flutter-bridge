@@ -1,12 +1,12 @@
 <?php
 
-namespace LaravelFlutter\Generator\Analyzers;
+namespace BasharShaeb\LaravelFlutterGenerator\Analyzers;
 
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Support\Str;
-use LaravelFlutter\Generator\Contracts\AnalyzerInterface;
+use BasharShaeb\LaravelFlutterGenerator\Contracts\AnalyzerInterface;
 
 class RouteAnalyzer implements AnalyzerInterface
 {
@@ -155,7 +155,7 @@ class RouteAnalyzer implements AnalyzerInterface
 
         // Extract from URI
         $uriParts = explode('/', trim($uri, '/'));
-        
+
         // Remove 'api' prefix if present
         if ($uriParts[0] === 'api') {
             array_shift($uriParts);
@@ -193,7 +193,7 @@ class RouteAnalyzer implements AnalyzerInterface
     private function extractParameters(Route $route): array
     {
         $parameters = [];
-        
+
         foreach ($route->parameterNames() as $parameter) {
             $parameters[] = [
                 'name' => $parameter,
@@ -233,7 +233,7 @@ class RouteAnalyzer implements AnalyzerInterface
     private function requiresAuthentication(array $middleware): bool
     {
         $authMiddleware = ['auth', 'auth:api', 'auth:sanctum', 'jwt.auth'];
-        
+
         return !empty(array_intersect($middleware, $authMiddleware));
     }
 
@@ -247,7 +247,7 @@ class RouteAnalyzer implements AnalyzerInterface
     {
         // Remove HEAD and OPTIONS if other methods exist
         $filtered = array_diff($methods, ['HEAD', 'OPTIONS']);
-        
+
         return !empty($filtered) ? $filtered[0] : $methods[0];
     }
 

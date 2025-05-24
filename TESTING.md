@@ -1,6 +1,6 @@
-# Testing Guide for Laravel Flutter Bridge
+# Testing Guide for Laravel Flutter Generator
 
-This guide explains how to test the Laravel Flutter Bridge package thoroughly.
+This guide explains how to test the Laravel Flutter Generator package thoroughly.
 
 ## 🧪 Testing Overview
 
@@ -52,8 +52,8 @@ composer create-project laravel/laravel test-app
 cd test-app
 
 # Add the package locally for testing
-composer config repositories.local path ../laravel-flutter-bridge
-composer require bashar-shaeb/laravel-flutter-bridge @dev
+composer config repositories.local path ../laravel-flutter-generator
+composer require bashar-shaeb/laravel-flutter-generator @dev
 ```
 
 ### 2. Create Test Models

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Flutter Generate All Command for Laravel Flutter Bridge
+ * Flutter Generate All Command for Laravel Flutter Generator
  *
  * @author BasharShaeb
- * @package LaravelFlutter\Generator\Commands
+ * @package BasharShaeb\LaravelFlutterGenerator\Commands
  */
 
-namespace LaravelFlutter\Generator\Commands;
+namespace BasharShaeb\LaravelFlutterGenerator\Commands;
 
-use LaravelFlutter\Generator\Generators\DartModelGenerator;
-use LaravelFlutter\Generator\Generators\ApiServiceGenerator;
-use LaravelFlutter\Generator\Generators\WidgetGenerator;
-use LaravelFlutter\Generator\Generators\ScreenGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\DartModelGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\ApiServiceGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\WidgetGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Generators\ScreenGenerator;
 
 class FlutterGenerateAllCommand extends BaseFlutterCommand
 {
@@ -48,8 +48,8 @@ class FlutterGenerateAllCommand extends BaseFlutterCommand
      * Create a new command instance.
      */
     public function __construct(
-        \LaravelFlutter\Generator\Analyzers\ModelAnalyzer $modelAnalyzer,
-        \LaravelFlutter\Generator\Analyzers\RouteAnalyzer $routeAnalyzer,
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer $modelAnalyzer,
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer $routeAnalyzer,
         DartModelGenerator $modelGenerator,
         ApiServiceGenerator $serviceGenerator,
         WidgetGenerator $widgetGenerator,

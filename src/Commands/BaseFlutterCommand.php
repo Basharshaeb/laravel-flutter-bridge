@@ -1,11 +1,11 @@
 <?php
 
-namespace LaravelFlutter\Generator\Commands;
+namespace BasharShaeb\LaravelFlutterGenerator\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use LaravelFlutter\Generator\Analyzers\ModelAnalyzer;
-use LaravelFlutter\Generator\Analyzers\RouteAnalyzer;
+use BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer;
+use BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer;
 
 abstract class BaseFlutterCommand extends Command
 {
@@ -29,7 +29,7 @@ abstract class BaseFlutterCommand extends Command
     public function __construct(ModelAnalyzer $modelAnalyzer, RouteAnalyzer $routeAnalyzer)
     {
         parent::__construct();
-        
+
         $this->modelAnalyzer = $modelAnalyzer;
         $this->routeAnalyzer = $routeAnalyzer;
     }
@@ -53,14 +53,14 @@ abstract class BaseFlutterCommand extends Command
             }
 
             $files = File::allFiles($path);
-            
+
             foreach ($files as $file) {
                 if ($file->getExtension() !== 'php') {
                     continue;
                 }
 
                 $className = $this->getClassNameFromFile($file->getPathname());
-                
+
                 if ($className && $this->isEloquentModel($className)) {
                     $models[] = $className;
                 }
@@ -79,7 +79,7 @@ abstract class BaseFlutterCommand extends Command
     protected function getClassNameFromFile(string $filePath): ?string
     {
         $content = File::get($filePath);
-        
+
         // Extract namespace
         if (preg_match('/namespace\s+([^;]+);/', $content, $namespaceMatches)) {
             $namespace = $namespaceMatches[1];
@@ -151,7 +151,7 @@ abstract class BaseFlutterCommand extends Command
     protected function ensureDirectoryExists(string $path): void
     {
         $directory = dirname($path);
-        
+
         if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
             $this->info("Created directory: {$directory}");
@@ -176,7 +176,7 @@ abstract class BaseFlutterCommand extends Command
         }
 
         $this->ensureDirectoryExists($path);
-        
+
         if (File::put($path, $content) !== false) {
             $this->info("Generated: {$path}");
             return true;
@@ -205,7 +205,7 @@ abstract class BaseFlutterCommand extends Command
     protected function isModelExcluded(string $modelClass): bool
     {
         $excludedModels = $this->getExcludedModels();
-        
+
         return in_array($modelClass, $excludedModels) ||
                in_array(class_basename($modelClass), $excludedModels);
     }
@@ -238,10 +238,10 @@ abstract class BaseFlutterCommand extends Command
         $this->info('Generation Summary:');
         $this->info('==================');
         $this->info('Successful: ' . count($successful));
-        
+
         if (!empty($failed)) {
             $this->error('Failed: ' . count($failed));
-            
+
             foreach ($failed as $failure) {
                 $this->error("  - {$failure['file']}: {$failure['error']}");
             }

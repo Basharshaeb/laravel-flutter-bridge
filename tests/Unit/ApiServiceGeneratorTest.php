@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelFlutter\Generator\Tests\Unit;
+namespace BasharShaeb\LaravelFlutterGenerator\Tests\Unit;
 
-use LaravelFlutter\Generator\Tests\TestCase;
-use LaravelFlutter\Generator\Generators\ApiServiceGenerator;
+use BasharShaeb\LaravelFlutterGenerator\Tests\TestCase;
+use BasharShaeb\LaravelFlutterGenerator\Generators\ApiServiceGenerator;
 
 class ApiServiceGeneratorTest extends TestCase
 {
@@ -12,7 +12,7 @@ class ApiServiceGeneratorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->generator = new ApiServiceGenerator();
     }
 
@@ -118,7 +118,7 @@ class ApiServiceGeneratorTest extends TestCase
     public function test_get_output_path_returns_correct_path(): void
     {
         $path = $this->generator->getOutputPath('User');
-        
+
         $this->assertStringContainsString('services', $path);
         $this->assertStringContainsString('user_service.dart', $path);
     }

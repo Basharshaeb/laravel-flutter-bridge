@@ -86,7 +86,7 @@ jobs:
 
         # Add package as local repository
         composer config repositories.local path ../
-        composer require bashar-shaeb/laravel-flutter-bridge @dev --no-interaction
+        composer require bashar-shaeb/laravel-flutter-generator @dev --no-interaction
 
     - name: Setup test models in Laravel app
       run: |

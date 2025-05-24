@@ -1,32 +1,32 @@
-# Laravel Flutter Bridge - Package Information
+# Laravel Flutter Generator - Package Information
 
 ## 📦 Package Details
 
-**Package Name**: `bashar-shaeb/laravel-flutter-bridge`  
-**GitHub Repository**: `https://github.com/BasharShaeb/laravel-flutter-bridge`  
-**Author**: BasharShaeb  
-**License**: MIT  
-**Version**: 1.0.0  
+**Package Name**: `bashar-shaeb/laravel-flutter-generator`
+**GitHub Repository**: `https://github.com/BasharShaeb/laravel-flutter-generator`
+**Author**: BasharShaeb
+**License**: MIT
+**Version**: 1.0.0
 
 ## 🚀 Installation
 
 ```bash
-composer require bashar-shaeb/laravel-flutter-bridge
+composer require bashar-shaeb/laravel-flutter-generator
 ```
 
 ## 📋 Publishing Checklist
 
 ### GitHub Repository Setup
-- [ ] Create repository: `laravel-flutter-bridge`
+- [ ] Create repository: `laravel-flutter-generator`
 - [ ] Set repository description: "A Laravel package that bridges Laravel backend with Flutter frontend by generating complete Flutter features"
-- [ ] Add topics: `laravel`, `flutter`, `bridge`, `generator`, `dart`, `mobile`, `api`, `cross-platform`
+- [ ] Add topics: `laravel`, `flutter`, `generator`, `dart`, `mobile`, `api`, `cross-platform`
 - [ ] Upload all package files
 - [ ] Create initial release (v1.0.0)
 
 ### Packagist Registration
 - [ ] Go to [packagist.org](https://packagist.org)
-- [ ] Submit package: `https://github.com/BasharShaeb/laravel-flutter-bridge`
-- [ ] Verify package name: `bashar-shaeb/laravel-flutter-bridge`
+- [ ] Submit package: `https://github.com/BasharShaeb/laravel-flutter-generator`
+- [ ] Verify package name: `bashar-shaeb/laravel-flutter-generator`
 - [ ] Enable auto-update hook
 
 ### Documentation
@@ -44,10 +44,10 @@ composer require bashar-shaeb/laravel-flutter-bridge
 
 ## 🔗 Important Links
 
-- **Packagist**: `https://packagist.org/packages/bashar-shaeb/laravel-flutter-bridge`
-- **GitHub**: `https://github.com/BasharShaeb/laravel-flutter-bridge`
-- **Issues**: `https://github.com/BasharShaeb/laravel-flutter-bridge/issues`
-- **Releases**: `https://github.com/BasharShaeb/laravel-flutter-bridge/releases`
+- **Packagist**: `https://packagist.org/packages/bashar-shaeb/laravel-flutter-generator`
+- **GitHub**: `https://github.com/BasharShaeb/laravel-flutter-generator`
+- **Issues**: `https://github.com/BasharShaeb/laravel-flutter-generator/issues`
+- **Releases**: `https://github.com/BasharShaeb/laravel-flutter-generator/releases`
 
 ## 📊 Package Statistics
 
@@ -84,7 +84,7 @@ Follow semantic versioning:
 ## [1.0.0] - 2024-XX-XX
 
 ### Added
-- Initial release of Laravel Flutter Bridge
+- Initial release of Laravel Flutter Generator
 - Complete Flutter code generation from Laravel models
 - Support for models, services, widgets, and screens
 - Comprehensive test suite
@@ -118,4 +118,4 @@ Follow semantic versioning:
 
 **Ready to publish!** 🚀
 
-This package is now properly configured with the name `bashar-shaeb/laravel-flutter-bridge` and ready for publication to GitHub and Packagist.
+This package is now properly configured with the name `bashar-shaeb/laravel-flutter-generator` and ready for publication to GitHub and Packagist.

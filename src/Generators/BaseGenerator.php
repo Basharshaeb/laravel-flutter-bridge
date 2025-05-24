@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelFlutter\Generator\Generators;
+namespace BasharShaeb\LaravelFlutterGenerator\Generators;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use LaravelFlutter\Generator\Contracts\GeneratorInterface;
+use BasharShaeb\LaravelFlutterGenerator\Contracts\GeneratorInterface;
 
 abstract class BaseGenerator implements GeneratorInterface
 {
@@ -72,14 +72,14 @@ abstract class BaseGenerator implements GeneratorInterface
     protected function renderTemplate(string $template, array $data = []): string
     {
         $templatePath = $this->getTemplatePath($template);
-        
+
         if (!File::exists($templatePath)) {
             throw new \InvalidArgumentException("Template not found: {$templatePath}");
         }
 
         // Simple template rendering - in a real implementation, you might use Blade
         $content = File::get($templatePath);
-        
+
         foreach ($data as $key => $value) {
             $placeholder = '{{' . $key . '}}';
             $content = str_replace($placeholder, $value, $content);
@@ -98,7 +98,7 @@ abstract class BaseGenerator implements GeneratorInterface
     {
         $basePath = $this->config['templates']['path'] ?? __DIR__ . '/../Templates';
         $extension = $this->config['templates']['extension'] ?? '.dart.stub';
-        
+
         return $basePath . '/' . $template . $extension;
     }
 
@@ -165,7 +165,7 @@ abstract class BaseGenerator implements GeneratorInterface
     protected function ensureDirectoryExists(string $path): void
     {
         $directory = dirname($path);
-        
+
         if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
@@ -181,7 +181,7 @@ abstract class BaseGenerator implements GeneratorInterface
     protected function writeFile(string $path, string $content): bool
     {
         $this->ensureDirectoryExists($path);
-        
+
         return File::put($path, $content) !== false;
     }
 
@@ -211,11 +211,11 @@ abstract class BaseGenerator implements GeneratorInterface
 
         foreach ($lines as $line) {
             $isEmpty = trim($line) === '';
-            
+
             if ($isEmpty && $previousLineEmpty) {
                 continue; // Skip consecutive empty lines
             }
-            
+
             $formatted[] = $line;
             $previousLineEmpty = $isEmpty;
         }
@@ -233,14 +233,14 @@ abstract class BaseGenerator implements GeneratorInterface
     protected function generateDocComment(string $description, array $params = []): string
     {
         $doc = "/// {$description}\n";
-        
+
         if (!empty($params)) {
             $doc .= "///\n";
             foreach ($params as $param => $desc) {
                 $doc .= "/// [{$param}] {$desc}\n";
             }
         }
-        
+
         return $doc;
     }
 }
