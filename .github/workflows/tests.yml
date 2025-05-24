@@ -12,11 +12,13 @@ jobs:
 
     strategy:
       matrix:
-        php-version: [8.1, 8.2, 8.3]
-        laravel-version: [10.*, 11.*]
+        php-version: [8.1, 8.2, 8.3, 8.4]
+        laravel-version: [10.*, 11.*, 12.*]
         exclude:
           - php-version: 8.1
             laravel-version: 11.*
+          - php-version: 8.1
+            laravel-version: 12.*
 
     name: PHP ${{ matrix.php-version }} - Laravel ${{ matrix.laravel-version }}
 

@@ -351,10 +351,10 @@ composer test-coverage
 
 ## Requirements
 
-- PHP 8.1+
-- Laravel 10.0+ or 11.0+
+- PHP 8.1+ (8.2, 8.3, 8.4 supported)
+- Laravel 10.0+, 11.0+, or 12.0+
 - Flutter 3.0+
-- Doctrine DBAL 3.0+ (for database schema analysis)
+- Doctrine DBAL 3.0+ or 4.0+ (for database schema analysis)
 
 ## Contributing
 
