@@ -3,6 +3,7 @@
 namespace BasharShaeb\LaravelFlutterGenerator\Tests\Unit;
 
 use BasharShaeb\LaravelFlutterGenerator\Tests\TestCase;
+use BasharShaeb\LaravelFlutterGenerator\Tests\TestHelper;
 use BasharShaeb\LaravelFlutterGenerator\Generators\DartModelGenerator;
 
 class DartModelGeneratorTest extends TestCase
@@ -13,7 +14,9 @@ class DartModelGeneratorTest extends TestCase
     {
         parent::setUp();
 
-        $this->generator = new DartModelGenerator();
+        // Create generator with test config
+        $config = TestHelper::getTestConfig();
+        $this->generator = new DartModelGenerator($config);
     }
 
     public function test_generate_creates_valid_dart_model(): void

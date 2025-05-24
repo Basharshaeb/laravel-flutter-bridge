@@ -59,7 +59,58 @@ abstract class BaseGenerator implements GeneratorInterface
      */
     protected function getDefaultConfig(): array
     {
-        return config('flutter-generator', []);
+        try {
+            if (function_exists('config')) {
+                return config('flutter-generator', []);
+            }
+
+            if (app()->bound('config')) {
+                return app('config')->get('flutter-generator', []);
+            }
+
+            return $this->getFallbackConfig();
+        } catch (\Exception $e) {
+            return $this->getFallbackConfig();
+        }
+    }
+
+    /**
+     * Get fallback configuration when config service is not available.
+     *
+     * @return array The fallback configuration
+     */
+    protected function getFallbackConfig(): array
+    {
+        return [
+            'output' => [
+                'base_path' => sys_get_temp_dir() . '/flutter_output',
+                'models_path' => 'models',
+                'services_path' => 'services',
+                'widgets_path' => 'widgets',
+                'screens_path' => 'screens',
+            ],
+            'api' => [
+                'base_url' => 'http://localhost:8000/api',
+                'timeout' => 30,
+            ],
+            'generation' => [
+                'architecture' => 'provider',
+                'null_safety' => true,
+                'use_json_annotation' => true,
+            ],
+            'naming' => [
+                'use_snake_case' => true,
+            ],
+            'model_analysis' => [
+                'include_relationships' => true,
+                'excluded_attributes' => ['password', 'remember_token'],
+            ],
+            'excluded_models' => [],
+            'templates' => [
+                'path' => __DIR__ . '/../Templates',
+                'extension' => '.dart.stub',
+            ],
+        ];
     }
 
     /**

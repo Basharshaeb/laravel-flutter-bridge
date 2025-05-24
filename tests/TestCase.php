@@ -31,33 +31,16 @@ abstract class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-        // Set up flutter-generator config for testing
-        $app['config']->set('flutter-generator', [
-            'output' => [
-                'base_path' => sys_get_temp_dir() . '/flutter_test_output',
-                'models_path' => 'models',
-                'services_path' => 'services',
-                'widgets_path' => 'widgets',
-                'screens_path' => 'screens',
-            ],
-            'api' => [
-                'base_url' => 'http://localhost:8000/api',
-                'timeout' => 30,
-            ],
-            'generation' => [
-                'architecture' => 'provider',
-                'null_safety' => true,
-                'use_json_annotation' => true,
-            ],
-            'naming' => [
-                'use_snake_case' => true,
-            ],
-            'model_analysis' => [
-                'include_relationships' => true,
-                'excluded_attributes' => ['password', 'remember_token'],
-            ],
-            'excluded_models' => [],
-        ]);
+        // Ensure config service is properly bound
+        if (!$app->bound('config')) {
+            $app->singleton('config', function ($app) {
+                return new \Illuminate\Config\Repository();
+            });
+        }
+
+        // Load test configuration
+        $testConfig = require __DIR__ . '/config/flutter-generator.php';
+        $app['config']->set('flutter-generator', $testConfig);
     }
 
     protected function tearDown(): void
