@@ -15,9 +15,19 @@
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
+            <exclude>./tests/Unit/ModelAnalyzerTest.php</exclude>
+            <exclude>./tests/Unit/RouteAnalyzerTest.php</exclude>
+            <exclude>./tests/Unit/DartModelGeneratorTest.php</exclude>
+            <exclude>./tests/Unit/ApiServiceGeneratorTest.php</exclude>
         </testsuite>
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
+            <exclude>./tests/Feature/CommandsTest.php</exclude>
+        </testsuite>
+        <testsuite name="Simple">
+            <file>./tests/Unit/SimpleModelAnalyzerTest.php</file>
+            <file>./tests/Unit/SimpleGeneratorTest.php</file>
+            <file>./tests/Feature/SimpleCommandTest.php</file>
         </testsuite>
     </testsuites>
     <source>

@@ -26,12 +26,12 @@ abstract class BaseFlutterCommand extends Command
     /**
      * Create a new command instance.
      */
-    public function __construct(ModelAnalyzer $modelAnalyzer, RouteAnalyzer $routeAnalyzer)
+    public function __construct(ModelAnalyzer $modelAnalyzer = null, RouteAnalyzer $routeAnalyzer = null)
     {
         parent::__construct();
 
-        $this->modelAnalyzer = $modelAnalyzer;
-        $this->routeAnalyzer = $routeAnalyzer;
+        $this->modelAnalyzer = $modelAnalyzer ?? new ModelAnalyzer();
+        $this->routeAnalyzer = $routeAnalyzer ?? new RouteAnalyzer();
     }
 
     /**

@@ -21,8 +21,11 @@ class RouteAnalyzerTest extends TestCase
 
     protected function setupTestRoutes(): void
     {
-        // Clear existing routes
-        RouteFacade::getRoutes()->clear();
+        // Clear existing routes by creating a new router
+        $this->app['router'] = new \Illuminate\Routing\Router(
+            $this->app['events'],
+            $this->app
+        );
 
         // Add test API routes
         RouteFacade::group(['prefix' => 'api'], function () {

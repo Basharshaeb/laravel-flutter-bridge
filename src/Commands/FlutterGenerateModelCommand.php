@@ -34,12 +34,15 @@ class FlutterGenerateModelCommand extends BaseFlutterCommand
      * Create a new command instance.
      */
     public function __construct(
-        \BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer $modelAnalyzer,
-        \BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer $routeAnalyzer,
-        DartModelGenerator $generator
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer $modelAnalyzer = null,
+        \BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer $routeAnalyzer = null,
+        DartModelGenerator $generator = null
     ) {
-        parent::__construct($modelAnalyzer, $routeAnalyzer);
-        $this->generator = $generator;
+        $this->modelAnalyzer = $modelAnalyzer ?? new \BasharShaeb\LaravelFlutterGenerator\Analyzers\ModelAnalyzer();
+        $this->routeAnalyzer = $routeAnalyzer ?? new \BasharShaeb\LaravelFlutterGenerator\Analyzers\RouteAnalyzer();
+        $this->generator = $generator ?? new DartModelGenerator();
+
+        parent::__construct();
     }
 
     /**
